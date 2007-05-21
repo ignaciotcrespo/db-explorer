@@ -1,0 +1,13 @@
+#summary One-sentence summary of this page.
+
+= Features =
+    * Support multiple queries per tab. Use Separator token to separate multiple SQLs.
+    * Limit number of rows in query result. Default is 50 rows.
+    * Support comments in SQL. Use /* */ to comment any part of SQL.
+    * Powerful Database Schema Explorer.
+    * Just enter <table-name> to execute simple SELECT query.
+    * View previously Executed SQLs in History Dialog.
+    * Tray hide/unhide support.
+    * Export query result to CSV file.
+    * Import CSV file.
+    * Manage connections to multiple database in single session.

@@ -1,4 +1,3 @@
-= Features =
     * Support multiple queries per tab. Use Separator token to separate multiple SQLs.
     * Limit number of rows in query result. Default is 50 rows.
     * Support comments in SQL. Use /* */ to comment any part of SQL.

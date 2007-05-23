@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<project name="DBExplorer" default="run" basedir=".">
+	 <!-- General Configuration -->
+	
+	<property name="src.dir" location="${basedir}/src"/>
+	
+	<!-- Directory containing swt.jar dll/so library to compile/run -->
+	<property name="lib.dir" location="${basedir}/lib"/>
+	<!-- Directory containing jdbc drivers, only require for run target -->
+	<property name="jdbc.dir" location="${basedir}/ext-jars"/>
+	
+	<property name="build.dir" location="${basedir}/bin"/>
+	<property name="dist.dir" location="${basedir}/dist"/>
+	
+	<target name="init">
+	    
+	    <mkdir dir="${dist.dir}"/>
+	   	<path id="compile.classpath">
+			<fileset dir="${lib.dir}" includes="*.jar"/>	            
+		</path>
+	</target>
+	
+	 <target name="compile" depends="init"
+	   description="Compile Java sources">
+
+	    <!-- Compile Java classes as necessary -->
+	    <mkdir    dir="${build.dir}"/>
+	    <javac srcdir="${src.dir}"
+	          destdir="${build.dir}">
+	           
+	        <classpath refid="compile.classpath"/>
+	    </javac>
+
+	    <!-- Copy application resources , manifest and images -->
+	    <copy  todir="${build.dir}/">
+	      <fileset dir="${src.dir}" excludes="**/*.java"/>
+	    </copy>
+
+	  </target>
+
+
+	<target name="clean" description="Removes build artifacts">
+	        <delete dir="${build.dir}"/>
+	        <delete dir="${dist.dir}"/>
+    </target>
+
+	<target name="dist" depends="compile" description="Creates DBExplorer.jar">
+		 <jar jarfile="${dist.dir}/DBExplorer.jar"
+		         basedir="${build.dir}"  manifest="${src.dir}/META-INF/MANIFEST.MF"/>
+	</target>
+	
+	<target name="run" depends="dist" description="Run DBExplorer.jar">
+		<java classname="com.sheelapps.dbexplorer.DBExplorer" fork="true">
+		      
+		       	<jvmarg value="-Djava.library.path=${lib.dir}"/> 
+		         <classpath>
+		           <pathelement location="${dist.dir}/DBExplorer.jar"/>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+				<fileset dir="${jdbc.dir}" includes="*.jar"/>	
+		         </classpath>
+	   </java>
+		</target>
+	
+</project>
